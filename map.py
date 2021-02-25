@@ -60,4 +60,4 @@ map.add_child(fg_v)
 map.add_child(fg_p)
 map.add_child(folium.LayerControl())
 
-map.save("MapAdv.html")
+map.save("map.html")
