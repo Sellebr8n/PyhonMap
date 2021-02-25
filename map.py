@@ -30,11 +30,11 @@ map = folium.Map(
     tiles="Stamen Terrain",
 )
 
-fg = folium.FeatureGroup(name="My Map")
+fg_v = folium.FeatureGroup(name="Volcanos")
 
 for lt, ln, el, nm in zip(lat, lon, elev, name):
     iframe = folium.IFrame(html=html % (nm, nm, el), width=200, height=100)
-    fg.add_child(
+    fg_v.add_child(
         folium.CircleMarker(
             location=[lt,ln],
             radius=3, 
@@ -45,7 +45,8 @@ for lt, ln, el, nm in zip(lat, lon, elev, name):
         )
     )
 
-fg.add_child(
+fg_p = folium.FeatureGroup(name="Population")
+fg_p.add_child(
     folium.GeoJson(
         data = open('world.json', "r", encoding="utf-8-sig").read(),
         style_function=lambda x: { "fillColor":"green" if x["properties"]["POP2005"] < 10000000 
@@ -55,7 +56,8 @@ fg.add_child(
     )
 )
 
-map.add_child(fg)
-
+map.add_child(fg_v)
+map.add_child(fg_p)
+map.add_child(folium.LayerControl())
 
 map.save("MapAdv.html")
